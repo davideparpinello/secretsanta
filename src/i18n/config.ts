@@ -1,27 +1,29 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
+
 import { en } from './en';
 import { fr } from './fr';
+import { it } from './it';
 
 export type Translations = typeof en;
 
 const resources = {
   en: { translation: en },
-  fr: { translation: fr }
+  fr: { translation: fr },
+  it: { translation: it },
 } satisfies Record<string, { translation: Translations }>;
 
 export const SUPPORTED_LANGUAGES = Object.keys(resources);
 
 i18n
-  .use(LanguageDetector)
-  .use(initReactI18next)
+  .use(initReactI18next) // ⬅️ Removed LanguageDetector
   .init({
     resources,
-    fallbackLng: 'en',
+    lng: 'it',           // ⬅️ Default language
+    fallbackLng: 'it',   // ⬅️ Fallback is also Italian
     interpolation: {
-      escapeValue: false
-    }
+      escapeValue: false,
+    },
   });
 
 // Type augmentation for useTranslation hook
@@ -31,4 +33,4 @@ declare module 'i18next' {
   }
 }
 
-export default i18n; 
+export default i18n;
